@@ -31,6 +31,7 @@ loginBtn.onclick = async () => {
 
 // Dodawanie produktu
 addBtn.onclick = async () => {
+  console.log("Kliknięto Dodaj"); // <--- czy kliknięcie w ogóle działa
   const title = document.getElementById("title").value;
   const desc = document.getElementById("desc").value;
   const file = document.getElementById("file").files[0];
@@ -38,9 +39,11 @@ addBtn.onclick = async () => {
   if (!title || !desc || !file) return alert("Uzupełnij wszystkie pola");
 
   try {
+    console.log("Próba uploadu pliku:", file.name);
     const ref = storage.ref("works/" + Date.now() + "_" + file.name);
     await ref.put(file);
     const imgURL = await ref.getDownloadURL();
+    console.log("URL pliku:", imgURL);
 
     await db.collection("works").add({
       title,
@@ -50,13 +53,9 @@ addBtn.onclick = async () => {
     });
 
     alert("Produkt dodany pomyślnie!");
-
-    // reset formularza
-    document.getElementById("title").value = "";
-    document.getElementById("desc").value = "";
-    document.getElementById("file").value = "";
-
   } catch (e) {
+    console.error("Błąd przy dodawaniu:", e);
     alert("Błąd: " + e.message);
   }
 };
+
