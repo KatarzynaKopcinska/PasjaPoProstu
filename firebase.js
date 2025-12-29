@@ -6,12 +6,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/9.23.0/firebase
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "TWOJ_API_KEY",
-  authDomain: "TWOJ_DOMAIN",
-  projectId: "TWOJ_PROJECT_ID",
-  storageBucket: "TWOJ_BUCKET",
-  messagingSenderId: "TU_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyCJug-WWwnAjTbyPJBf5rgLdZD2oKWg_e4",
+  authDomain: "pasjapoprostu-386fb.firebaseapp.com",
+  projectId: "pasjapoprostu-386fb",
+  storageBucket: "pasjapoprostu-386fb.firebasestorage.app",
+  messagingSenderId: "1025672670668",
+  appId: "1:1025672670668:web:f2f114204eab7d32aa8169",
+  measurementId: "G-23E3MK83SS"
 };
 
 export const app = initializeApp(firebaseConfig);
