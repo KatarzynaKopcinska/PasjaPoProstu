@@ -2,38 +2,60 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Pasja po prostu - rękodzieło</title>
+  <title>Pasja Po Prostu – Rękodzieło</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Pasja po prostu - rękodzieło</h1>
-  <p style="text-align:center;">Tworzone z sercem 💛</p>
 
-  <!-- Galeria -->
-  <div id="gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:20px;"></div>
-
-  <!-- Modal kontaktowy -->
-  <div id="inquiryModal">
-    <div>
-      <span id="closeModal">X</span>
-      <h3>Zapytaj o produkt</h3>
-      <p id="productTitle"></p>
-      <input id="inqName" placeholder="Twoje imię" required>
-      <input id="inqEmail" placeholder="Twój email" type="email" required>
-      <textarea id="inqMessage" placeholder="Wiadomość" required></textarea>
-      <button id="sendInquiry">Wyślij</button>
-      <p id="inqStatus"></p>
-    </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Pasja Po Prostu</h1>
+    <p>Rękodzieło tworzone z sercem 🤍</p>
+    <a href="#gallery" class="btn-primary">Zobacz prace</a>
   </div>
+</section>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<!-- O MNIE -->
+<section class="about">
+  <h2>O mnie</h2>
+  <p>
+    Tworzę rękodzieło z pasji i miłości do detali. Każda praca jest unikalna,
+    wykonywana ręcznie i z pełnym zaangażowaniem.
+    Jeśli któraś z prac Cię zainteresuje — napisz do mnie.
+  </p>
+</section>
 
-  <!-- Twój kod -->
-  <script src="firebase.js"></script>
-  <script src="script.js"></script>
+<!-- GALERIA -->
+<section id="gallery" class="gallery-section">
+  <h2>Moje prace</h2>
+  <div id="galleryGrid" class="gallery-grid"></div>
+</section>
+
+<!-- MODAL -->
+<div id="inquiryModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <input id="inqName" placeholder="Imię">
+    <input id="inqEmail" placeholder="Email">
+    <textarea id="inqMessage" placeholder="Wiadomość"></textarea>
+    <button id="sendInquiry" class="btn-primary">Wyślij zapytanie</button>
+    <p id="inqStatus"></p>
+  </div>
+</div>
+
+<!-- STOPKA -->
+<footer>
+  <p>© 2025 Pasja Po Prostu</p>
+</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="firebase.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
