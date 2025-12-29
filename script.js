@@ -1,7 +1,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-  // Logowanie
+  // Logowanie (admin.html)
   const loginBtn = document.getElementById("login");
   if (loginBtn) {
     loginBtn.addEventListener("click", async () => {
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Dodawanie prac
+  // Dodawanie prac (admin.html)
   const addBtn = document.getElementById("add");
   if (addBtn) {
     addBtn.addEventListener("click", async () => {
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Wczytywanie galerii
+  // Wczytywanie galerii (index.html)
   const gallery = document.getElementById("gallery");
   if (gallery) {
     db.collection('works').orderBy('created', 'desc').get().then(snapshot => {
@@ -51,4 +51,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 </script>
-
