@@ -3,21 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Panel admina – Pasja Po Prostu</title>
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
 <h2>Panel admina</h2>
 
-<div class="admin-box">
+<div id="login-container">
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Hasło">
   <button id="loginBtn">Zaloguj</button>
 </div>
 
-<hr>
-
-<div class="admin-box">
+<div id="add-container" style="display:none;">
   <h3>Dodaj produkt</h3>
   <input id="title" placeholder="Nazwa produktu">
   <textarea id="desc" placeholder="Opis"></textarea>
@@ -31,8 +29,8 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
-<script src="firebase.js?v=4"></script>
-<script src="script.js?v=4"></script>
+<script src="firebase.js?v=5"></script>
+<script src="script.js?v=5"></script>
 
 </body>
 </html>
