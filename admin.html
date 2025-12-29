@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <title>Panel admina - Pasją</title>
 <link rel="stylesheet" href="style.css">
-<script type="module" src="firebase.js"></script>
-<script type="module" src="script.js"></script>
 </head>
 <body>
-<h2>Pasją - Panel Admina</h2>
+<h2>Pasja po prostu - Panel Admina</h2>
+
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Hasło">
 <button id="login">Zaloguj</button>
@@ -18,5 +17,60 @@
 <textarea id="desc" placeholder="Opis"></textarea>
 <input type="file" id="file">
 <button id="add">Dodaj</button>
+
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyCJug-WWwnAjTbyPJBf5rgLdZD2oKWg_e4",
+  authDomain: "pasjapoprostu-386fb.firebaseapp.com",
+  projectId: "pasjapoprostu-386fb",
+  storageBucket: "pasjapoprostu-386fb.firebasestorage.app",
+  messagingSenderId: "1025672670668",
+  appId: "1:1025672670668:web:f2f114204eab7d32aa8169",
+  measurementId: "G-23E3MK83SS"
+};
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const loginBtn = document.getElementById("login");
+    loginBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        alert("Zalogowano! Możesz dodawać rękodzieła.");
+      } catch(e) { alert("Błąd logowania: " + e.message); }
+    });
+
+    const addBtn = document.getElementById("add");
+    addBtn.addEventListener("click", async () => {
+      const title = document.getElementById("title").value;
+      const desc = document.getElementById("desc").value;
+      const file = document.getElementById("file").files[0];
+
+      if (!title || !desc || !file) return alert("Wypełnij wszystkie pola!");
+
+      const imgRef = storage.ref('pasja/' + file.name);
+      await imgRef.put(file);
+      const imgURL = await imgRef.getDownloadURL();
+
+      await db.collection('works').add({ title, desc, imgURL, created: new Date() });
+      alert("Dodano rękodzieło ✨");
+
+      document.getElementById("title").value = "";
+      document.getElementById("desc").value = "";
+      document.getElementById("file").value = "";
+    });
+  });
+</script>
 </body>
 </html>
+
