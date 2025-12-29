@@ -1,4 +1,6 @@
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
   // Logowanie
   const loginBtn = document.getElementById("login");
   if (loginBtn) {
@@ -46,4 +48,7 @@
       });
     });
   }
+
+});
 </script>
+
