@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>Panel admina - Pasja</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Panel admina - Pasja</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h2>Pasja po prostu - Panel Admina</h2>
+  <h2>Pasja po prostu - Panel Admina</h2>
 
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Hasło">
-<button id="login">Zaloguj</button>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Hasło">
+  <button id="login">Zaloguj</button>
 
-<h3>Dodaj rękodzieło</h3>
-<input id="title" placeholder="Tytuł">
-<textarea id="desc" placeholder="Opis"></textarea>
-<input type="file" id="file">
-<button id="add">Dodaj</button>
+  <h3>Dodaj rękodzieło</h3>
+  <input id="title" placeholder="Tytuł">
+  <textarea id="desc" placeholder="Opis"></textarea>
+  <input type="file" id="file">
+  <button id="add">Dodaj</button>
 
-<!-- Firebase i nasz JS -->
-<script src="firebase.js"></script>
-<script src="script.js"></script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+  <!-- Twój kod -->
+  <script src="firebase.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
