@@ -9,22 +9,22 @@
   <h1>Pasja po prostu - rękodzieło</h1>
   <p style="text-align:center;">Tworzone z sercem 💛</p>
 
-  <!-- Panel admina -->
-  <div id="admin-panel" style="background:#fff7f0; padding:20px; border-radius:10px; max-width:500px; margin:20px auto;">
-    <h2>Panel admina</h2>
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Hasło">
-    <button id="login">Zaloguj</button>
-
-    <h3>Dodaj rękodzieło</h3>
-    <input id="title" placeholder="Tytuł">
-    <textarea id="desc" placeholder="Opis"></textarea>
-    <input type="file" id="file">
-    <button id="add">Dodaj</button>
-  </div>
-
   <!-- Galeria -->
   <div id="gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:20px;"></div>
+
+  <!-- Modal kontaktowy -->
+  <div id="inquiryModal">
+    <div>
+      <span id="closeModal">X</span>
+      <h3>Zapytaj o produkt</h3>
+      <p id="productTitle"></p>
+      <input id="inqName" placeholder="Twoje imię" required>
+      <input id="inqEmail" placeholder="Twój email" type="email" required>
+      <textarea id="inqMessage" placeholder="Wiadomość" required></textarea>
+      <button id="sendInquiry">Wyślij</button>
+      <p id="inqStatus"></p>
+    </div>
+  </div>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
