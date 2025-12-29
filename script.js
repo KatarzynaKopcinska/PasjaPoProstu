@@ -1,61 +1,73 @@
-const loginBtn = document.getElementById("loginBtn");
-const addBtn = document.getElementById("addBtn");
-const loginContainer = document.getElementById("login-container");
-const addContainer = document.getElementById("add-container");
+document.addEventListener("DOMContentLoaded", function() {
 
-// Sprawdzenie stanu logowania
-auth.onAuthStateChanged(user => {
-  if (user) {
-    loginContainer.style.display = "none";
-    addContainer.style.display = "block";
-  } else {
-    loginContainer.style.display = "block";
-    addContainer.style.display = "none";
-  }
-});
+  const loginBtn = document.getElementById("login");
+  const addBtn = document.getElementById("add");
 
-// Logowanie
-loginBtn.onclick = async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const loginPanel = document.getElementById("login-panel");
+  const addPanel = document.getElementById("add-panel");
 
-  if (!email || !password) return alert("Wpisz email i hasło");
+  // Sprawdzenie stanu zalogowanego użytkownika
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      // Admin zalogowany
+      loginPanel.style.display = "none";
+      addPanel.style.display = "block";
+    } else {
+      // Nie zalogowany
+      loginPanel.style.display = "block";
+      addPanel.style.display = "none";
+    }
+  });
 
-  try {
-    await auth.signInWithEmailAndPassword(email, password);
-    alert("Zalogowano poprawnie");
-  } catch (e) {
-    alert("Błąd logowania: " + e.message);
-  }
-};
+  // Logowanie admina
+  if (loginBtn) {
+    loginBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-// Dodawanie produktu
-addBtn.onclick = async () => {
-  console.log("Kliknięto Dodaj"); // <--- czy kliknięcie w ogóle działa
-  const title = document.getElementById("title").value;
-  const desc = document.getElementById("desc").value;
-  const file = document.getElementById("file").files[0];
+      if (!email || !password) return alert("Wpisz email i hasło!");
 
-  if (!title || !desc || !file) return alert("Uzupełnij wszystkie pola");
-
-  try {
-    console.log("Próba uploadu pliku:", file.name);
-    const ref = storage.ref("works/" + Date.now() + "_" + file.name);
-    await ref.put(file);
-    const imgURL = await ref.getDownloadURL();
-    console.log("URL pliku:", imgURL);
-
-    await db.collection("works").add({
-      title,
-      desc,
-      imgURL,
-      created: new Date()
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        alert("Zalogowano! Panel dodawania jest aktywny.");
+      } catch(e) {
+        console.error(e);
+        alert("Błąd logowania: " + e.message);
+      }
     });
-
-    alert("Produkt dodany pomyślnie!");
-  } catch (e) {
-    console.error("Błąd przy dodawaniu:", e);
-    alert("Błąd: " + e.message);
   }
-};
 
+  // Dodawanie prac
+  if (addBtn) {
+    addBtn.addEventListener("click", async () => {
+      const title = document.getElementById("title").value;
+      const desc = document.getElementById("desc").value;
+      const file = document.getElementById("file").files[0];
+
+      if (!title || !desc || !file) return alert("Wypełnij wszystkie pola!");
+
+      try {
+        const imgRef = storage.ref('works/' + Date.now() + "_" + file.name);
+        await imgRef.put(file);
+        const imgURL = await imgRef.getDownloadURL();
+
+        await db.collection('works').add({
+          title,
+          desc,
+          imgURL,
+          created: new Date()
+        });
+
+        alert("Dodano rękodzieło ✨");
+
+        document.getElementById("title").value = "";
+        document.getElementById("desc").value = "";
+        document.getElementById("file").value = "";
+      } catch(e) {
+        console.error(e);
+        alert("Błąd dodawania pracy: " + e.message);
+      }
+    });
+  }
+
+});
