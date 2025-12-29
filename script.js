@@ -5,6 +5,7 @@ const modalTitle = document.getElementById("modalTitle");
 db.collection("works").orderBy("created", "desc").get().then(snapshot => {
   snapshot.forEach(doc => {
     const d = doc.data();
+
     const card = document.createElement("div");
     card.className = "card";
 
@@ -20,22 +21,26 @@ db.collection("works").orderBy("created", "desc").get().then(snapshot => {
     card.querySelector("button").onclick = () => {
       modal.style.display = "flex";
       modalTitle.innerText = d.title;
-      document.getElementById("sendInquiry").dataset.product = d.title;
+      sendInquiry.dataset.product = d.title;
     };
 
     gallery.appendChild(card);
   });
 });
 
-document.getElementById("closeModal").onclick = () => modal.style.display = "none";
+closeModal.onclick = () => modal.style.display = "none";
 
-document.getElementById("sendInquiry").onclick = async () => {
+sendInquiry.onclick = async () => {
   await db.collection("inquiries").add({
-    product: document.getElementById("sendInquiry").dataset.product,
+    product: sendInquiry.dataset.product,
     name: inqName.value,
     email: inqEmail.value,
     message: inqMessage.value,
     created: new Date()
   });
-  document.getElementById("inqStatus").innerText = "Wiadomość wysłana 🤍";
+
+  inqStatus.innerText = "Wiadomość wysłana 🤍";
+  inqName.value = "";
+  inqEmail.value = "";
+  inqMessage.value = "";
 };
