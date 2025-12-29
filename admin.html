@@ -2,35 +2,35 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Panel admina – Pasja Po Prostu</title>
-  <link rel="stylesheet" href="style.css?v=5">
+  <title>Panel admina - Pasja</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <h2>Pasja po prostu - Panel Admina</h2>
 
-<h2>Panel admina</h2>
+  <!-- Panel logowania -->
+  <div id="login-panel">
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Hasło">
+    <button id="login">Zaloguj</button>
+  </div>
 
-<div id="login-container">
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Hasło">
-  <button id="loginBtn">Zaloguj</button>
-</div>
+  <!-- Panel dodawania zdjęć (ukryty domyślnie) -->
+  <div id="add-panel" style="display:none;">
+    <h3>Dodaj rękodzieło</h3>
+    <input id="title" placeholder="Tytuł">
+    <textarea id="desc" placeholder="Opis"></textarea>
+    <input type="file" id="file">
+    <button id="add">Dodaj</button>
+  </div>
 
-<div id="add-container" style="display:none;">
-  <h3>Dodaj produkt</h3>
-  <input id="title" placeholder="Nazwa produktu">
-  <textarea id="desc" placeholder="Opis"></textarea>
-  <input type="file" id="file">
-  <button id="addBtn">Dodaj</button>
-</div>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-
-<script src="firebase.js?v=5"></script>
-<script src="script.js?v=5"></script>
-
+  <script src="firebase.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
