@@ -1,46 +1,46 @@
-const gallery = document.getElementById("galleryGrid");
-const modal = document.getElementById("inquiryModal");
-const modalTitle = document.getElementById("modalTitle");
+const loginBtn = document.getElementById("loginBtn");
+const addBtn = document.getElementById("addBtn");
 
-db.collection("works").orderBy("created", "desc").get().then(snapshot => {
-  snapshot.forEach(doc => {
-    const d = doc.data();
+loginBtn.onclick = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    const card = document.createElement("div");
-    card.className = "card";
+  if (!email || !password) return alert("Wpisz email i hasło");
 
-    card.innerHTML = `
-      <img src="${d.imgURL}">
-      <div class="card-content">
-        <h3>${d.title}</h3>
-        <p>${d.desc}</p>
-        <button class="btn-primary">Zapytaj o produkt</button>
-      </div>
-    `;
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    alert("Zalogowano poprawnie");
+  } catch (e) {
+    alert("Błąd logowania: " + e.message);
+  }
+};
 
-    card.querySelector("button").onclick = () => {
-      modal.style.display = "flex";
-      modalTitle.innerText = d.title;
-      sendInquiry.dataset.product = d.title;
-    };
+addBtn.onclick = async () => {
+  if (!auth.currentUser) return alert("Najpierw się zaloguj");
 
-    gallery.appendChild(card);
-  });
-});
+  const title = document.getElementById("title").value;
+  const desc = document.getElementById("desc").value;
+  const file = document.getElementById("file").files[0];
 
-closeModal.onclick = () => modal.style.display = "none";
+  if (!title || !desc || !file) return alert("Uzupełnij wszystkie pola");
 
-sendInquiry.onclick = async () => {
-  await db.collection("inquiries").add({
-    product: sendInquiry.dataset.product,
-    name: inqName.value,
-    email: inqEmail.value,
-    message: inqMessage.value,
-    created: new Date()
-  });
+  try {
+    const ref = storage.ref("works/" + Date.now() + "_" + file.name);
+    await ref.put(file);
+    const imgURL = await ref.getDownloadURL();
 
-  inqStatus.innerText = "Wiadomość wysłana 🤍";
-  inqName.value = "";
-  inqEmail.value = "";
-  inqMessage.value = "";
+    await db.collection("works").add({
+      title,
+      desc,
+      imgURL,
+      created: new Date()
+    });
+
+    alert("Produkt dodany!");
+    document.getElementById("title").value = "";
+    document.getElementById("desc").value = "";
+    document.getElementById("file").value = "";
+  } catch (e) {
+    alert("Błąd: " + e.message);
+  }
 };
