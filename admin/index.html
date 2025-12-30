@@ -2,18 +2,132 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Admina - Pasja</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Panel Admina - Pasja Po Prostu</title>
+  <style>
+    body { font-family: Arial; padding:20px; }
+    table { width:100%; border-collapse:collapse; margin-top:20px; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:left; }
+    button { margin:0 5px; padding:5px 10px; }
+  </style>
 </head>
 <body>
-  <h2>Panel Admina - Pasja po prostu</h2>
+  <h1>Panel Admina</h1>
 
-  <input id="token" type="password" placeholder="GitHub Personal Access Token">
-  <input id="title" placeholder="Tytuł">
-  <textarea id="desc" placeholder="Opis"></textarea>
-  <input type="file" id="file">
-  <button id="add">Dodaj produkt</button>
+  <h2>Dodaj nowy produkt</h2>
+  <input id="title" placeholder="Tytuł"><br>
+  <textarea id="desc" placeholder="Opis"></textarea><br>
+  <input type="file" id="image"><br>
+  <button id="add">Dodaj</button>
 
-  <script src="script.js"></script>
+  <h2>Produkty</h2>
+  <table id="productsTable">
+    <thead>
+      <tr><th>Tytuł</th><th>Opis</th><th>Zdjęcie</th><th>Akcje</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+  const token = 'TWÓJ_PERSONAL_ACCESS_TOKEN';
+  const repo = 'katarzynakopcinska/PasjaPoProstu';
+  const branch = 'main';
+
+  async function loadProducts() {
+    const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/products`, {
+      headers: { Authorization: 'token ' + token }
+    });
+    const files = await res.json();
+
+    const tbody = document.querySelector('#productsTable tbody');
+    tbody.innerHTML = '';
+
+    for (let file of files) {
+      const fileRes = await fetch(file.download_url);
+      const product = await fileRes.json();
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${product.title}</td>
+        <td>${product.desc}</td>
+        <td><img src="${product.image}" width="80"></td>
+        <td>
+          <button onclick="editProduct('${file.path}', '${file.sha}')">Edytuj</button>
+          <button onclick="deleteProduct('${file.path}', '${file.sha}')">Usuń</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  async function addProduct() {
+    const title = document.getElementById('title').value;
+    const desc = document.getElementById('desc').value;
+    const imageFile = document.getElementById('image').files[0];
+
+    if (!title || !desc || !imageFile) return alert('Wypełnij wszystkie pola');
+
+    // Tutaj możesz dodać upload obrazu do uploads/ i pobranie URL
+    const imageURL = 'uploads/' + imageFile.name;
+
+    const content = btoa(JSON.stringify({ title, desc, image: imageURL }));
+    const filename = `content/products/${title.replace(/\s/g,'_')}.json`;
+
+    await fetch(`https://api.github.com/repos/${repo}/contents/${filename}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: 'token ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Dodano produkt ' + title,
+        content: content,
+        branch: branch
+      })
+    });
+
+    alert('Produkt dodany!');
+    loadProducts();
+  }
+
+  async function editProduct(path, sha) {
+    const newTitle = prompt('Nowy tytuł:');
+    const newDesc = prompt('Nowy opis:');
+    if (!newTitle || !newDesc) return;
+
+    const content = btoa(JSON.stringify({ title:newTitle, desc:newDesc, image: 'brak_zdjecia.png' }));
+
+    await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token },
+      body: JSON.stringify({
+        message: 'Edytowano produkt ' + newTitle,
+        content: content,
+        sha: sha,
+        branch: branch
+      })
+    });
+
+    alert('Produkt zaktualizowany!');
+    loadProducts();
+  }
+
+  async function deleteProduct(path, sha) {
+    if(!confirm('Na pewno usunąć produkt?')) return;
+    await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+      method: 'DELETE',
+      headers: { Authorization: 'token ' + token },
+      body: JSON.stringify({
+        message: 'Usunięto produkt',
+        sha: sha,
+        branch: branch
+      })
+    });
+    alert('Produkt usunięty!');
+    loadProducts();
+  }
+
+  document.getElementById('add').addEventListener('click', addProduct);
+  loadProducts();
+  </script>
 </body>
 </html>
