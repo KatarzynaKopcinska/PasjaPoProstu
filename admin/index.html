@@ -1,11 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <title>Panel administracyjny</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://unpkg.com/decap-cms@3.1.1/dist/decap-cms.js"></script>
+  <meta charset="UTF-8">
+  <title>Panel Admina - Pasja po prostu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+  <!-- Tutaj CMS wstrzyknie swój interfejs -->
+  <div id="nc-root"></div>
+
+  <!-- Netlify CMS -->
+  <script src="https://unpkg.com/netlify-cms-app@^3.1.1/dist/netlify-cms.js"></script>
+
+  <!-- Konfiguracja CMS -->
+  <script>
+    NetlifyCMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'katarzynakopcinska/PasjaPoProstu', // Twoje repo
+          branch: 'main',
+        },
+        media_folder: 'uploads',
+        public_folder: '/uploads',
+        collections: [
+          {
+            name: 'products',
+            label: 'Produkty',
+            folder: 'content/products',
+            create: true,
+            slug: '{{slug}}',
+            fields: [
+              { label: 'Tytuł', name: 'title', widget: 'string' },
+              { label: 'Opis', name: 'desc', widget: 'text' },
+              { label: 'Zdjęcie', name: 'image', widget: 'image' }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
