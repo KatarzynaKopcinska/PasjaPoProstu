@@ -2,18 +2,17 @@ backend:
   name: github
   repo: katarzynakopcinska/PasjaPoProstu
   branch: main
-  site_domain: thunderous-croquembouche-239589.netlify.app
 
 media_folder: "uploads"
 public_folder: "/uploads"
 
 collections:
-  - name: "produkty"
+  - name: "products"
     label: "Produkty"
-    folder: "produkty"
+    folder: "content/products"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Nazwa", name: "title", widget: "string" }
-      - { label: "Opis", name: "description", widget: "text" }
-      - { label: "Zdjęcie", name: "image", widget: "image" }
+      - {label: "Tytuł", name: "title", widget: "string"}
+      - {label: "Opis", name: "desc", widget: "text"}
+      - {label: "Zdjęcie", name: "image", widget: "image"}
