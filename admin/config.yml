@@ -2,6 +2,7 @@ backend:
   name: github
   repo: katarzynakopcinska/PasjaPoProstu
   branch: main
+  site_domain: thunderous-croquembouche-239589.netlify.app
 
 media_folder: "uploads"
 public_folder: "/uploads"
