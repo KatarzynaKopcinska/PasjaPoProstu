@@ -2,17 +2,18 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Admina - Pasja po prostu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admina - Pasja</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="nc-root"></div>
+  <h2>Panel Admina - Pasja po prostu</h2>
 
-  <!-- Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms-app@^2.15.71/dist/netlify-cms.js"></script>
-  <script src="https://unpkg.com/netlify-cms@^2.15.71/dist/netlify-cms.js"></script>
-  <script src="https://unpkg.com/netlify-cms-app@^3.1.1/dist/netlify-cms.js"></script>
+  <input id="token" type="password" placeholder="GitHub Personal Access Token">
+  <input id="title" placeholder="Tytuł">
+  <textarea id="desc" placeholder="Opis"></textarea>
+  <input type="file" id="file">
+  <button id="add">Dodaj produkt</button>
 
-
+  <script src="script.js"></script>
 </body>
 </html>
