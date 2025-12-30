@@ -1,6 +1,6 @@
-backend:
-  name: github
-  repo: katarzynakopcinska/PasjaPoProstu
+
+  backend:
+  name: git-gateway
   branch: main
 
 media_folder: "uploads"
